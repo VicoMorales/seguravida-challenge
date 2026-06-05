@@ -1,0 +1,6 @@
+@SeguraVida.Claims.Api_HostAddress = http://localhost:5009
+
+GET {{SeguraVida.Claims.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

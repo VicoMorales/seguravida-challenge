@@ -1,0 +1,76 @@
+name: seguravida-claims
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/backend/SeguraVida.Claims.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__ClaimsDatabase: "Server=database,1433;Database=SeguraVidaClaims;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True;Encrypt=False"
+      Jwt__Issuer: SeguraVida.Claims
+      Jwt__Audience: SeguraVida.Claims.Web
+      Jwt__Secret: development-only-secret-key-change-before-production
+      Database__ApplyMigrations: "true"
+      Loki__Url: "http://loki:3100"
+      Cors__AllowedOrigins__0: "http://localhost:4200"
+      Cors__AllowedOrigins__1: "http://127.0.0.1:4200"
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+      loki:
+        condition: service_started
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/frontend/seguravida-claims-web/Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: seguravida-claims-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_strong_password123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - seguravida-sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  loki:
+    image: grafana/loki:3.2.1
+    command: ["-config.file=/etc/loki/loki-config.yml"]
+    volumes:
+      - ./infra/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
+    ports:
+      - "3100:3100"
+
+  grafana:
+    image: grafana/grafana:11.2.2
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - loki
+
+volumes:
+  seguravida-sqlserver-data:

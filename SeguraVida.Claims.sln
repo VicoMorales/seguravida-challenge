@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{457AC383-6AE7-4568-9F1C-735B3695BEF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{0F410E54-255E-4568-8695-7A702711E704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguraVida.Claims.Api", "src\backend\SeguraVida.Claims.Api\SeguraVida.Claims.Api.csproj", "{70DDD2A9-FD15-467A-958A-B61F2634CAAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguraVida.Claims.Application", "src\backend\SeguraVida.Claims.Application\SeguraVida.Claims.Application.csproj", "{1729B549-7832-4D3C-A166-64F5ADCE5D3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguraVida.Claims.Domain", "src\backend\SeguraVida.Claims.Domain\SeguraVida.Claims.Domain.csproj", "{9F6400ED-22BB-41C7-A56A-274057FF279C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguraVida.Claims.Infrastructure", "src\backend\SeguraVida.Claims.Infrastructure\SeguraVida.Claims.Infrastructure.csproj", "{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguraVida.Claims.Tests", "src\backend\SeguraVida.Claims.Tests\SeguraVida.Claims.Tests.csproj", "{C0E2DF46-1E09-450C-813E-542B5990BF7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70DDD2A9-FD15-467A-958A-B61F2634CAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70DDD2A9-FD15-467A-958A-B61F2634CAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70DDD2A9-FD15-467A-958A-B61F2634CAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70DDD2A9-FD15-467A-958A-B61F2634CAAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1729B549-7832-4D3C-A166-64F5ADCE5D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1729B549-7832-4D3C-A166-64F5ADCE5D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1729B549-7832-4D3C-A166-64F5ADCE5D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1729B549-7832-4D3C-A166-64F5ADCE5D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6400ED-22BB-41C7-A56A-274057FF279C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6400ED-22BB-41C7-A56A-274057FF279C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6400ED-22BB-41C7-A56A-274057FF279C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6400ED-22BB-41C7-A56A-274057FF279C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E2DF46-1E09-450C-813E-542B5990BF7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E2DF46-1E09-450C-813E-542B5990BF7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E2DF46-1E09-450C-813E-542B5990BF7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E2DF46-1E09-450C-813E-542B5990BF7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F410E54-255E-4568-8695-7A702711E704} = {457AC383-6AE7-4568-9F1C-735B3695BEF5}
+		{70DDD2A9-FD15-467A-958A-B61F2634CAAD} = {0F410E54-255E-4568-8695-7A702711E704}
+		{1729B549-7832-4D3C-A166-64F5ADCE5D3F} = {0F410E54-255E-4568-8695-7A702711E704}
+		{9F6400ED-22BB-41C7-A56A-274057FF279C} = {0F410E54-255E-4568-8695-7A702711E704}
+		{7407FEBF-07B9-47C5-B1B6-0CABBFEBC8A3} = {0F410E54-255E-4568-8695-7A702711E704}
+		{C0E2DF46-1E09-450C-813E-542B5990BF7E} = {0F410E54-255E-4568-8695-7A702711E704}
+	EndGlobalSection
+EndGlobal
