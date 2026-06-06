@@ -1,7 +1,20 @@
 :root
-  --app-shell-bg: #f6f8fb
-  --app-border: #d8dee8
-  --app-muted: #5e6a7d
+  --app-shell-bg: #f4f6ff
+  --app-sidebar-bg: #eaf0ff
+  --app-surface: #ffffff
+  --app-panel: #f8faff
+  --app-border: #d8e0f0
+  --app-muted: #657086
+  --app-ink: #071936
+  --app-primary: #2563eb
+  --app-primary-hover: #1d4ed8
+  --app-navy: #061a3a
+  --app-danger: #ef4444
+  --app-danger-soft: #fee2e2
+  --app-warning: #f59e0b
+  --app-warning-soft: #fff4d8
+  --app-success: #16a34a
+  --app-success-soft: #e7f8ee
 
 *
   box-sizing: border-box
@@ -9,6 +22,7 @@
 body
   min-height: 100vh
   background: var(--app-shell-bg)
+  color: var(--app-ink)
 
 .status-badge
   display: inline-flex
@@ -22,26 +36,26 @@ body
   border: 1px solid transparent
 
 .status-reported
-  color: #25476a
-  background: #e7f0f8
-  border-color: #b9d1e8
+  color: #0b3b79
+  background: #e8efff
+  border-color: #b8c9f7
 
 .status-under-review
   color: #72560f
-  background: #fff4d8
+  background: var(--app-warning-soft, #fff4d8)
   border-color: #ead08c
 
 .status-approved
-  color: #1f5b3f
-  background: #ddf5e8
-  border-color: #abd9bf
+  color: #166534
+  background: #e7f8ee
+  border-color: #b7e2c8
 
 .status-rejected
-  color: #8b2d2d
-  background: #fde7e7
-  border-color: #efb5b5
+  color: #991b1b
+  background: #fee2e2
+  border-color: #fecaca
 
 .status-paid
-  color: #314d23
-  background: #e7f5df
-  border-color: #b9dba6
+  color: #061a3a
+  background: #dbeafe
+  border-color: #93c5fd

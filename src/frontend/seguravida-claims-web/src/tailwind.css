@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+
+  --color-claims-ink: #071936;
+  --color-claims-navy: #061a3a;
+  --color-claims-navy-hover: #0b2454;
+  --color-claims-blue: #2563eb;
+  --color-claims-blue-hover: #1d4ed8;
+  --color-claims-blue-soft: #e8efff;
+  --color-claims-sidebar: #eaf0ff;
+  --color-claims-shell: #f4f6ff;
+  --color-claims-surface: #ffffff;
+  --color-claims-panel: #f8faff;
+  --color-claims-border: #d8e0f0;
+  --color-claims-muted: #657086;
+  --color-claims-success: #16a34a;
+  --color-claims-success-soft: #e7f8ee;
+  --color-claims-warning: #f59e0b;
+  --color-claims-warning-soft: #fff4d8;
+  --color-claims-danger: #ef4444;
+  --color-claims-danger-soft: #fee2e2;
+  --color-claims-map-dark: #2f3440;
+}

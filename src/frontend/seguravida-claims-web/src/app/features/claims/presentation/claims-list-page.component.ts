@@ -37,8 +37,8 @@ import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
     <section class="space-y-4">
       <header class="flex flex-col justify-between gap-3 md:flex-row md:items-center">
         <div>
-          <h1 class="text-2xl font-semibold text-slate-950">Claims</h1>
-          <p class="text-sm text-slate-600">Listado operativo con filtros, busqueda y paginacion.</p>
+          <h1 class="text-2xl font-semibold text-claims-ink">Claims</h1>
+          <p class="text-sm text-claims-muted">Listado operativo con filtros, busqueda y paginacion.</p>
         </div>
 
         <a *appHasRole="'OPERATOR'" mat-flat-button routerLink="/claims/new">
@@ -47,7 +47,7 @@ import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
         </a>
       </header>
 
-      <section class="rounded border border-slate-200 bg-white p-4">
+      <section class="rounded border border-claims-border bg-claims-surface p-4">
         <div class="grid gap-3 md:grid-cols-[1fr_180px_180px]">
           <mat-form-field appearance="outline">
             <mat-label>Search</mat-label>
@@ -76,21 +76,21 @@ import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
         </div>
       </section>
 
-      <section class="overflow-hidden rounded border border-slate-200 bg-white">
+      <section class="overflow-hidden rounded border border-claims-border bg-claims-surface">
         @if (facade.loading()) {
           <div class="grid min-h-64 place-items-center">
             <mat-spinner diameter="36" />
           </div>
         } @else if (facade.error()) {
-          <div class="p-6 text-sm text-red-700">{{ facade.error() }}</div>
+          <div class="p-6 text-sm text-claims-danger">{{ facade.error() }}</div>
         } @else if (facade.claims().length === 0) {
-          <div class="p-6 text-sm text-slate-600">No claims found.</div>
+          <div class="p-6 text-sm text-claims-muted">No claims found.</div>
         } @else {
           <table mat-table [dataSource]="facade.claims()" class="w-full">
             <ng-container matColumnDef="claimNumber">
               <th mat-header-cell *matHeaderCellDef>Claim</th>
               <td mat-cell *matCellDef="let claim">
-                <a class="font-semibold text-blue-700" [routerLink]="['/claims', claim.claimId]">{{ claim.claimNumber }}</a>
+                <a class="font-semibold text-claims-blue" [routerLink]="['/claims', claim.claimId]">{{ claim.claimNumber }}</a>
               </td>
             </ng-container>
 
