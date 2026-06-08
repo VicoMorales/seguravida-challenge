@@ -30,15 +30,15 @@ public sealed class CreateClaimCommandHandler : IRequestHandler<CreateClaimComma
 
     public async Task<Guid> Handle(CreateClaimCommand request, CancellationToken cancellationToken)
     {
-        var policy = await _policies.GetByIdAsync(request.PolicyId, cancellationToken)
+        var policy = await _policies.GetByNumberAsync(request.PolicyNumber.Trim(), cancellationToken)
             ?? throw new DomainException("Policy was not found.");
 
         var existingClaims = await _claims.FindByPolicyAndIncidentDateAsync(
-            request.PolicyId,
+            policy.Id,
             request.IncidentDate,
             cancellationToken);
 
-        if (DuplicateClaimPolicy.IsDuplicate(request.PolicyId, request.IncidentDate, request.Description, existingClaims))
+        if (DuplicateClaimPolicy.IsDuplicate(policy.Id, request.IncidentDate, request.Description, existingClaims))
         {
             throw new DomainException("A similar claim already exists for the same policy and incident date.");
         }

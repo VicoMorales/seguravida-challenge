@@ -4,7 +4,7 @@ using SeguraVida.Claims.Domain.Claims;
 namespace SeguraVida.Claims.Application.Claims;
 
 public sealed record CreateClaimCommand(
-    Guid PolicyId,
+    string PolicyNumber,
     string Type,
     DateOnly IncidentDate,
     DateOnly ReportedDate,

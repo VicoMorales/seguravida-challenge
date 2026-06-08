@@ -6,7 +6,7 @@ public sealed class CreateClaimCommandValidator : AbstractValidator<CreateClaimC
 {
     public CreateClaimCommandValidator()
     {
-        RuleFor(command => command.PolicyId).NotEmpty();
+        RuleFor(command => command.PolicyNumber).NotEmpty().MaximumLength(50);
         RuleFor(command => command.Type).NotEmpty();
         RuleFor(command => command.Description).NotEmpty().MaximumLength(1000);
         RuleFor(command => command.ClaimedAmount).GreaterThan(0);

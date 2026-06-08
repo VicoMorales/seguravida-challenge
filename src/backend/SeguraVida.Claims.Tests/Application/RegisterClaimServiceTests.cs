@@ -90,6 +90,11 @@ public sealed class RegisterClaimServiceTests
         {
             return Task.FromResult<InsurancePolicy?>(_policy.Id == policyId ? _policy : null);
         }
+
+        public Task<InsurancePolicy?> GetByNumberAsync(string policyNumber, CancellationToken cancellationToken)
+        {
+            return Task.FromResult<InsurancePolicy?>(_policy.PolicyNumber == policyNumber ? _policy : null);
+        }
     }
 
     private sealed class StubClaimRepository : IClaimRepository

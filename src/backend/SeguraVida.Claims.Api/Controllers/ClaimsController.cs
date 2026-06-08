@@ -50,7 +50,7 @@ public sealed class ClaimsController : ControllerBase
     {
         var claimId = await _mediator.Send(
             new CreateClaimCommand(
-                request.PolicyId,
+                request.PolicyNumber,
                 request.Type,
                 request.IncidentDate,
                 request.ReportedDate,

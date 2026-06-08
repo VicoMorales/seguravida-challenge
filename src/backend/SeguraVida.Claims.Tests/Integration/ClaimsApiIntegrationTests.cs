@@ -40,7 +40,7 @@ public sealed class ClaimsApiIntegrationTests : IClassFixture<ClaimsApiFactory>
         var createResponse = await client.PostAsJsonAsync(
             "/api/claims",
             new CreateClaimRequest(
-                ClaimsApiFactory.PolicyId,
+                "POL-INT-001",
                 "ACCIDENT",
                 new DateOnly(2026, 6, 5),
                 new DateOnly(2026, 6, 5),

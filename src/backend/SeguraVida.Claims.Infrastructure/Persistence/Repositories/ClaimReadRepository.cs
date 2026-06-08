@@ -21,14 +21,16 @@ public sealed class ClaimReadRepository : IClaimReadRepository
         var query =
             from claim in _dbContext.Claims.AsNoTracking()
             join policy in _dbContext.Policies.AsNoTracking() on claim.PolicyId equals policy.Id
-            select new { claim, policy };
+            join party in _dbContext.InsuredParties.AsNoTracking() on policy.HolderId equals party.Id
+            select new { claim, policy, party };
 
         if (!string.IsNullOrWhiteSpace(filters.Search))
         {
             var search = filters.Search.Trim();
             query = query.Where(row =>
                 row.claim.ClaimNumber.Contains(search) ||
-                row.policy.PolicyNumber.Contains(search));
+                row.policy.PolicyNumber.Contains(search) ||
+                row.party.DocumentId.Contains(search));
         }
 
         if (!string.IsNullOrWhiteSpace(filters.Status))

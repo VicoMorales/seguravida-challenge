@@ -1,7 +1,7 @@
 namespace SeguraVida.Claims.Api.Contracts.Claims;
 
 public sealed record CreateClaimRequest(
-    Guid PolicyId,
+    string PolicyNumber,
     string Type,
     DateOnly IncidentDate,
     DateOnly ReportedDate,
