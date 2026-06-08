@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AuthService } from '../auth/auth.service';
 import { HasRoleDirective } from '../../shared/directives/has-role.directive';
+import { roleLabel as getRoleLabel } from '../../shared/utils/ui-state';
 
 @Component({
   selector: 'app-layout',
@@ -19,8 +20,8 @@ import { HasRoleDirective } from '../../shared/directives/has-role.directive';
               SV
             </div>
             <div>
-              <div class="text-base font-semibold leading-tight">SeguraVida Claims</div>
-              <div class="text-xs text-claims-muted">Gestion de siniestros</div>
+              <div class="text-base font-semibold leading-tight">SeguraVida Siniestros</div>
+              <div class="text-xs text-claims-muted">Gestión de siniestros</div>
             </div>
           </div>
 
@@ -28,7 +29,7 @@ import { HasRoleDirective } from '../../shared/directives/has-role.directive';
             <span class="rounded border border-claims-border bg-claims-panel px-3 py-1 text-claims-muted">{{ roleLabel() }}</span>
             <button mat-stroked-button type="button" (click)="logout()">
               <mat-icon>logout</mat-icon>
-              Logout
+              Cerrar sesión
             </button>
           </div>
         </div>
@@ -43,7 +44,7 @@ import { HasRoleDirective } from '../../shared/directives/has-role.directive';
               class="flex items-center gap-2 rounded px-3 py-2 text-sm font-medium text-claims-ink"
             >
               <mat-icon>assignment</mat-icon>
-              Claims
+              Siniestros
             </a>
             <a
               *appHasRole="'AUDITOR'"
@@ -52,7 +53,7 @@ import { HasRoleDirective } from '../../shared/directives/has-role.directive';
               class="flex items-center gap-2 rounded px-3 py-2 text-sm font-medium text-claims-ink"
             >
               <mat-icon>analytics</mat-icon>
-              Reports
+              Reportes
             </a>
           </nav>
         </aside>
@@ -66,7 +67,7 @@ import { HasRoleDirective } from '../../shared/directives/has-role.directive';
 })
 export class AppLayoutComponent {
   private readonly auth = inject(AuthService);
-  readonly roleLabel = computed(() => this.auth.session()?.role ?? 'NO_ROLE');
+  readonly roleLabel = computed(() => getRoleLabel(this.auth.session()?.role ?? 'NO_ROLE'));
 
   logout(): void {
     this.auth.logout();

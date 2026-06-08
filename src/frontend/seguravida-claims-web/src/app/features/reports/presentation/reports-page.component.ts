@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 
-import { errorMessage } from '../../../shared/utils/ui-state';
+import { branchLabel as getBranchLabel, errorMessage, statusLabel as getStatusLabel } from '../../../shared/utils/ui-state';
 import { ReportsApiService } from '../data-access/reports-api.service';
 import { ClaimsSummaryRow } from '../domain/report.models';
 
@@ -18,21 +18,21 @@ import { ClaimsSummaryRow } from '../domain/report.models';
   template: `
     <section class="space-y-4">
       <header>
-        <h1 class="text-2xl font-semibold text-slate-950">Claims Summary</h1>
+        <h1 class="text-2xl font-semibold text-slate-950">Resumen de siniestros</h1>
         <p class="text-sm text-slate-600">Totales por ramo y estado con monto pagado.</p>
       </header>
 
       <section class="rounded border border-slate-200 bg-white p-4">
         <form class="grid gap-3 md:grid-cols-[180px_180px_auto]" [formGroup]="form" (ngSubmit)="load()">
           <mat-form-field appearance="outline">
-            <mat-label>From date</mat-label>
+            <mat-label>Fecha desde</mat-label>
             <input matInput type="date" formControlName="fromDate" />
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <mat-label>To date</mat-label>
+            <mat-label>Fecha hasta</mat-label>
             <input matInput type="date" formControlName="toDate" />
           </mat-form-field>
-          <button mat-flat-button type="submit" class="!h-14">Apply</button>
+          <button mat-flat-button type="submit" class="!h-14">Aplicar</button>
         </form>
       </section>
 
@@ -44,19 +44,19 @@ import { ClaimsSummaryRow } from '../domain/report.models';
         } @else {
           <table mat-table [dataSource]="rows()" class="w-full">
             <ng-container matColumnDef="branch">
-              <th mat-header-cell *matHeaderCellDef>Branch</th>
-              <td mat-cell *matCellDef="let row">{{ row.branch }}</td>
+              <th mat-header-cell *matHeaderCellDef>Ramo</th>
+              <td mat-cell *matCellDef="let row">{{ branchLabel(row.branch) }}</td>
             </ng-container>
             <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>Status</th>
-              <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let row">{{ statusLabel(row.status) }}</td>
             </ng-container>
             <ng-container matColumnDef="totalClaims">
               <th mat-header-cell *matHeaderCellDef>Total</th>
               <td mat-cell *matCellDef="let row">{{ row.totalClaims }}</td>
             </ng-container>
             <ng-container matColumnDef="paidAmount">
-              <th mat-header-cell *matHeaderCellDef>Paid</th>
+              <th mat-header-cell *matHeaderCellDef>Monto pagado</th>
               <td mat-cell *matCellDef="let row">{{ row.paidAmount | currency }}</td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
@@ -75,6 +75,8 @@ export class ReportsPageComponent implements OnInit {
   readonly error = signal<string | null>(null);
   readonly rows = signal<ClaimsSummaryRow[]>([]);
   readonly columns = ['branch', 'status', 'totalClaims', 'paidAmount'];
+  readonly statusLabel = getStatusLabel;
+  readonly branchLabel = getBranchLabel;
   readonly form = this.fb.nonNullable.group({
     fromDate: [''],
     toDate: [''],

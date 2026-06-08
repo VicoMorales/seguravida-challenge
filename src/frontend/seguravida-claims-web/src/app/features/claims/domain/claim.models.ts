@@ -59,7 +59,7 @@ export interface ClaimFilters {
 }
 
 export interface CreateClaimPayload {
-  policyId: string;
+  policyNumber: string;
   type: ClaimType;
   incidentDate: string;
   reportedDate: string;

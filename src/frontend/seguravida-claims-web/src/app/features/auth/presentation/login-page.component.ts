@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { UserRole } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
-import { errorMessage } from '../../../shared/utils/ui-state';
+import { errorMessage, roleLabel as getRoleLabel } from '../../../shared/utils/ui-state';
 
 @Component({
   selector: 'app-login-page',
@@ -16,8 +16,8 @@ import { errorMessage } from '../../../shared/utils/ui-state';
       <section class="w-full max-w-md">
         <div class="mb-6">
           <div class="mb-3 grid h-12 w-12 place-items-center rounded bg-blue-700 font-bold text-white">SV</div>
-          <h1 class="text-2xl font-semibold text-slate-950">SeguraVida Claims</h1>
-          <p class="mt-1 text-sm text-slate-600">Selecciona un rol mock para continuar.</p>
+          <h1 class="text-2xl font-semibold text-slate-950">SeguraVida Siniestros</h1>
+          <p class="mt-1 text-sm text-slate-600">Selecciona un rol de prueba para continuar.</p>
         </div>
 
         <mat-card class="!rounded !border !border-slate-200 !shadow-sm">
@@ -33,7 +33,7 @@ import { errorMessage } from '../../../shared/utils/ui-state';
                 >
                   <mat-icon>{{ role.icon }}</mat-icon>
                   <span class="ml-2 text-left">
-                    <span class="block font-semibold">{{ role.value }}</span>
+                    <span class="block font-semibold">{{ roleLabel(role.value) }}</span>
                     <span class="block text-xs text-slate-500">{{ role.description }}</span>
                   </span>
                 </button>
@@ -57,9 +57,10 @@ export class LoginPageComponent {
 
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
+  readonly roleLabel = getRoleLabel;
   readonly roles: { value: UserRole; icon: string; description: string }[] = [
     { value: 'OPERATOR', icon: 'edit_note', description: 'Registra y consulta siniestros' },
-    { value: 'ADJUSTER', icon: 'fact_check', description: 'Peritaje, aprobacion y pagos' },
+    { value: 'ADJUSTER', icon: 'fact_check', description: 'Peritaje, aprobación y pagos' },
     { value: 'AUDITOR', icon: 'visibility', description: 'Consulta, historial y reportes' },
   ];
 

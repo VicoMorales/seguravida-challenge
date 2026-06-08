@@ -10,7 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HasRoleDirective } from '../../../shared/directives/has-role.directive';
-import { errorMessage, statusClass } from '../../../shared/utils/ui-state';
+import {
+  branchLabel as getBranchLabel,
+  claimTypeLabel as getClaimTypeLabel,
+  errorMessage,
+  statusClass,
+  statusLabel as getStatusLabel,
+} from '../../../shared/utils/ui-state';
 import { ClaimsApiService } from '../data-access/claims-api.service';
 import { ClaimDetail } from '../domain/claim.models';
 
@@ -31,7 +37,7 @@ import { ClaimDetail } from '../domain/claim.models';
     <section class="space-y-4">
       <a routerLink="/claims" class="inline-flex items-center gap-1 text-sm font-medium text-claims-blue">
         <mat-icon>arrow_back</mat-icon>
-        Back to claims
+        Volver a siniestros
       </a>
 
       @if (loading()) {
@@ -45,62 +51,62 @@ import { ClaimDetail } from '../domain/claim.models';
               <h1 class="text-2xl font-semibold text-claims-ink">{{ claim()!.claimNumber }}</h1>
               <p class="mt-1 text-sm text-claims-muted">{{ claim()!.description }}</p>
             </div>
-            <span class="status-badge" [class]="statusClass(claim()!.status)">{{ claim()!.status }}</span>
+            <span class="status-badge" [class]="statusClass(claim()!.status)">{{ statusLabel(claim()!.status) }}</span>
           </div>
         </header>
 
         <section class="grid gap-4 xl:grid-cols-[1fr_420px]">
           <div class="space-y-4">
             <div class="rounded border border-claims-border bg-claims-surface p-5">
-              <h2 class="mb-4 text-base font-semibold">Claim data</h2>
+              <h2 class="mb-4 text-base font-semibold">Datos del siniestro</h2>
               <dl class="grid gap-4 md:grid-cols-2">
-                <div><dt class="text-xs text-claims-muted">Policy</dt><dd class="font-medium">{{ claim()!.policyNumber }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Branch</dt><dd class="font-medium">{{ claim()!.branch }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Type</dt><dd class="font-medium">{{ claim()!.type }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Incident date</dt><dd class="font-medium">{{ claim()!.incidentDate }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Reported date</dt><dd class="font-medium">{{ claim()!.reportedDate }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Claimed amount</dt><dd class="font-medium">{{ claim()!.claimedAmount | currency }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Approved amount</dt><dd class="font-medium">{{ claim()!.approvedAmount ?? '-' }}</dd></div>
-                <div><dt class="text-xs text-claims-muted">Peritaje notes</dt><dd class="font-medium">{{ claim()!.peritajeNotes ?? '-' }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Póliza</dt><dd class="font-medium">{{ claim()!.policyNumber }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Ramo</dt><dd class="font-medium">{{ branchLabel(claim()!.branch) }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Tipo</dt><dd class="font-medium">{{ claimTypeLabel(claim()!.type) }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Fecha del incidente</dt><dd class="font-medium">{{ claim()!.incidentDate }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Fecha de reporte</dt><dd class="font-medium">{{ claim()!.reportedDate }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Monto reclamado</dt><dd class="font-medium">{{ claim()!.claimedAmount | currency }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Monto aprobado</dt><dd class="font-medium">{{ claim()!.approvedAmount ?? '-' }}</dd></div>
+                <div><dt class="text-xs text-claims-muted">Notas de peritaje</dt><dd class="font-medium">{{ claim()!.peritajeNotes ?? '-' }}</dd></div>
               </dl>
             </div>
 
             <div *appHasRole="'ADJUSTER'" class="rounded border border-claims-border bg-claims-surface p-5">
-              <h2 class="mb-4 text-base font-semibold">Adjuster actions</h2>
+              <h2 class="mb-4 text-base font-semibold">Acciones del ajustador</h2>
               <div class="flex flex-wrap gap-2">
                 @if (claim()!.status === 'REPORTED') {
-                  <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="startReview()">Start review</button>
+                  <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="startReview()">Iniciar revisión</button>
                 }
 
                 @if (claim()!.status === 'UNDER_REVIEW') {
                   <form class="grid w-full gap-3 md:grid-cols-[180px_1fr_auto_auto]" [formGroup]="decisionForm">
                     <mat-form-field appearance="outline">
-                      <mat-label>Approved amount</mat-label>
+                      <mat-label>Monto aprobado</mat-label>
                       <input matInput type="number" formControlName="approvedAmount" />
                     </mat-form-field>
                     <mat-form-field appearance="outline">
-                      <mat-label>Peritaje notes</mat-label>
+                      <mat-label>Notas de peritaje</mat-label>
                       <input matInput formControlName="peritajeNotes" />
                     </mat-form-field>
-                    <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="approve()">Approve</button>
-                    <button mat-stroked-button type="button" [disabled]="actionLoading()" (click)="reject()">Reject</button>
+                    <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="approve()">Aprobar</button>
+                    <button mat-stroked-button type="button" [disabled]="actionLoading()" (click)="reject()">Rechazar</button>
                   </form>
                 }
 
                 @if (claim()!.status === 'APPROVED') {
-                  <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="pay()">Pay</button>
+                  <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="pay()">Pagar</button>
                 }
               </div>
             </div>
           </div>
 
           <aside class="rounded border border-claims-border bg-claims-surface p-5">
-            <h2 class="mb-4 text-base font-semibold">Audit timeline</h2>
+            <h2 class="mb-4 text-base font-semibold">Línea de auditoría</h2>
             <ol class="space-y-4">
               @for (item of claim()!.history; track item.historyId) {
                 <li class="border-l-2 border-claims-blue-soft pl-4">
-                  <div class="text-sm font-semibold">{{ item.previousStatus }} -> {{ item.newStatus }}</div>
-                  <div class="text-xs text-claims-muted">{{ item.changedAt }} by {{ item.changedBy }}</div>
+                  <div class="text-sm font-semibold">{{ statusLabel(item.previousStatus) }} -> {{ statusLabel(item.newStatus) }}</div>
+                  <div class="text-xs text-claims-muted">{{ item.changedAt }} por {{ item.changedBy }}</div>
                   @if (item.reason) {
                     <div class="mt-1 text-sm text-claims-ink">{{ item.reason }}</div>
                   }
@@ -123,6 +129,9 @@ export class ClaimDetailPageComponent implements OnInit {
   readonly error = signal<string | null>(null);
   readonly claim = signal<ClaimDetail | null>(null);
   readonly statusClass = statusClass;
+  readonly statusLabel = getStatusLabel;
+  readonly branchLabel = getBranchLabel;
+  readonly claimTypeLabel = getClaimTypeLabel;
   readonly decisionForm = this.fb.nonNullable.group({
     approvedAmount: [0, [Validators.required, Validators.min(1)]],
     peritajeNotes: ['', [Validators.required]],
@@ -136,7 +145,7 @@ export class ClaimDetailPageComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (!id) {
-      this.error.set('Claim id is missing.');
+      this.error.set('No se encontró el identificador del siniestro.');
       return;
     }
 
