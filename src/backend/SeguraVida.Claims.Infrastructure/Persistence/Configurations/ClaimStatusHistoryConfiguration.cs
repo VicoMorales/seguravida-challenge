@@ -11,7 +11,9 @@ public sealed class ClaimStatusHistoryConfiguration : IEntityTypeConfiguration<C
         builder.ToTable("CLAIM_STATUS_HISTORY");
 
         builder.HasKey(history => history.Id);
-        builder.Property(history => history.Id).HasColumnName("history_id");
+        builder.Property(history => history.Id)
+            .HasColumnName("history_id")
+            .ValueGeneratedNever();
         builder.Property(history => history.ClaimId).HasColumnName("claim_id").IsRequired();
         builder.Property(history => history.FromStatus)
             .HasColumnName("previous_status")

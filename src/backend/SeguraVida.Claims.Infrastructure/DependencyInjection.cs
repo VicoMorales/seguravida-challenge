@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.AddScoped<IClaimRepository, ClaimRepository>();
         services.AddScoped<IClaimReadRepository, ClaimReadRepository>();
         services.AddScoped<IPolicyRepository, PolicyRepository>();
+        services.AddScoped<IPolicyReadRepository, PolicyReadRepository>();
         services.AddScoped<IClaimsReportRepository, ClaimsReportRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.Configure<JwtOptions>(options =>

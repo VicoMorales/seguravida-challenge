@@ -1,3 +1,5 @@
+using SeguraVida.Claims.Application.Policies;
+
 namespace SeguraVida.Claims.Application.Claims;
 
 public sealed record ClaimListItemDto(
@@ -26,6 +28,8 @@ public sealed record ClaimDetailDto(
     decimal? ApprovedAmount,
     string Status,
     string? PeritajeNotes,
+    PolicySummaryDto Policy,
+    InsuredPartySummaryDto InsuredParty,
     IReadOnlyCollection<ClaimStatusHistoryDto> History);
 
 public sealed record ClaimStatusHistoryDto(

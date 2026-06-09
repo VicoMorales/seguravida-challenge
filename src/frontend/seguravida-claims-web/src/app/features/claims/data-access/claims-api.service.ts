@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { API_BASE_URL } from '../../../core/config/api.config';
-import { ClaimDetail, ClaimFilters, ClaimListItem, CreateClaimPayload, PagedResult } from '../domain/claim.models';
+import { ClaimDetail, ClaimFilters, ClaimListItem, CreateClaimPayload, PagedResult, PolicyLookup } from '../domain/claim.models';
 
 @Injectable({ providedIn: 'root' })
 export class ClaimsApiService {
@@ -37,6 +37,10 @@ export class ClaimsApiService {
 
   getClaim(id: string) {
     return this.http.get<ClaimDetail>(`${this.apiBaseUrl}/claims/${id}`);
+  }
+
+  getPolicy(policyNumber: string) {
+    return this.http.get<PolicyLookup>(`${this.apiBaseUrl}/policies/${encodeURIComponent(policyNumber)}`);
   }
 
   createClaim(payload: CreateClaimPayload) {

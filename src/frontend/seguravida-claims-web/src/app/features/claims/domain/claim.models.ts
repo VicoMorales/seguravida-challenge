@@ -31,6 +31,28 @@ export interface ClaimStatusHistory {
   reason: string | null;
 }
 
+export interface PolicySummary {
+  policyId: string;
+  policyNumber: string;
+  branch: ClaimBranch;
+  premium: number;
+  startDate: string;
+  endDate: string;
+  insuredAmount: number;
+  status: string;
+}
+
+export interface InsuredPartySummary {
+  fullName: string;
+  maskedDocumentId: string;
+  maskedEmail: string;
+}
+
+export interface PolicyLookup {
+  policy: PolicySummary;
+  insuredParty: InsuredPartySummary;
+}
+
 export interface ClaimDetail {
   claimId: string;
   claimNumber: string;
@@ -45,6 +67,8 @@ export interface ClaimDetail {
   approvedAmount: number | null;
   status: ClaimStatus;
   peritajeNotes: string | null;
+  policy: PolicySummary;
+  insuredParty: InsuredPartySummary;
   history: ClaimStatusHistory[];
 }
 

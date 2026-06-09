@@ -71,6 +71,29 @@ import { ClaimDetail } from '../domain/claim.models';
               </dl>
             </div>
 
+            <div class="grid gap-4 lg:grid-cols-2">
+              <div class="rounded border border-claims-border bg-claims-surface p-5">
+                <h2 class="mb-4 text-base font-semibold">Datos de la poliza</h2>
+                <dl class="grid gap-4">
+                  <div><dt class="text-xs text-claims-muted">Numero</dt><dd class="font-medium">{{ claim()!.policy.policyNumber }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Ramo</dt><dd class="font-medium">{{ branchLabel(claim()!.policy.branch) }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Vigencia</dt><dd class="font-medium">{{ claim()!.policy.startDate }} - {{ claim()!.policy.endDate }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Prima</dt><dd class="font-medium">{{ claim()!.policy.premium | currency }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Suma asegurada</dt><dd class="font-medium">{{ claim()!.policy.insuredAmount | currency }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Estado</dt><dd class="font-medium">{{ policyStatusLabel(claim()!.policy.status) }}</dd></div>
+                </dl>
+              </div>
+
+              <div class="rounded border border-claims-border bg-claims-surface p-5">
+                <h2 class="mb-4 text-base font-semibold">Datos del asegurado</h2>
+                <dl class="grid gap-4">
+                  <div><dt class="text-xs text-claims-muted">Nombre</dt><dd class="font-medium">{{ claim()!.insuredParty.fullName }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Documento</dt><dd class="font-medium">{{ claim()!.insuredParty.maskedDocumentId }}</dd></div>
+                  <div><dt class="text-xs text-claims-muted">Email</dt><dd class="font-medium">{{ claim()!.insuredParty.maskedEmail }}</dd></div>
+                </dl>
+              </div>
+            </div>
+
             <div *appHasRole="'ADJUSTER'" class="rounded border border-claims-border bg-claims-surface p-5">
               <h2 class="mb-4 text-base font-semibold">Acciones del Liquidador</h2>
               <div class="flex flex-wrap gap-2">
@@ -186,6 +209,14 @@ export class ClaimDetailPageComponent implements OnInit {
 
   pay(): void {
     this.runAction((id) => this.api.pay(id));
+  }
+
+  policyStatusLabel(status: string): string {
+    return {
+      ACTIVE: 'Activa',
+      EXPIRED: 'Vencida',
+      CANCELLED: 'Cancelada',
+    }[status] ?? status;
   }
 
   private runAction(action: (id: string) => ReturnType<ClaimsApiService['pay']>): void {

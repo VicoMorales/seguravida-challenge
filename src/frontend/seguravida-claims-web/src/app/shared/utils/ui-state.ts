@@ -2,8 +2,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export function errorMessage(error: unknown): string {
   if (error instanceof HttpErrorResponse) {
-    const body = error.error as { message?: string; errors?: string[] } | null;
-    return body?.errors?.[0] ?? body?.message ?? 'No se pudo completar la solicitud.';
+    const body = error.error as { message?: string; errors?: string[] | Record<string, string[]> } | null;
+
+    if (Array.isArray(body?.errors)) {
+      return body.errors[0] ?? body.message ?? 'No se pudo completar la solicitud.';
+    }
+
+    if (body?.errors && typeof body.errors === 'object') {
+      const fieldErrors = Object.values(body.errors).flat();
+      return fieldErrors[0] ?? body.message ?? 'No se pudo completar la solicitud.';
+    }
+
+    return body?.message ?? 'No se pudo completar la solicitud.';
   }
 
   return 'Ocurrió un error inesperado.';
