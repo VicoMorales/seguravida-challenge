@@ -15,6 +15,9 @@ import { HasRoleDirective } from '../../../shared/directives/has-role.directive'
 import { branchLabel as getBranchLabel, statusClass, statusLabel as getStatusLabel } from '../../../shared/utils/ui-state';
 import { ClaimsFacade } from '../application/claims.facade';
 import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { formatDateMat } from '../../../shared/utils/formatDate';
 
 @Component({
   selector: 'app-claims-list-page',
@@ -29,6 +32,8 @@ import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTableModule,
     HasRoleDirective,
   ],
@@ -76,12 +81,16 @@ import { ClaimBranch, ClaimStatus } from '../domain/claim.models';
 
           <mat-form-field appearance="outline">
             <mat-label>Desde</mat-label>
-            <input matInput type="date" [formControl]="fromDate" (change)="applyFilters()" />
+            <input matInput [matDatepicker]="fromDatePicker" [formControl]="fromDate" (dateChange)="applyFilters()" />
+            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Hasta</mat-label>
-            <input matInput type="date" [formControl]="toDate" (change)="applyFilters()" />
+            <input matInput [matDatepicker]="toDatePicker" [formControl]="toDate" (dateChange)="applyFilters()" />
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
           </mat-form-field>
         </div>
       </section>
@@ -170,8 +179,8 @@ export class ClaimsListPageComponent implements OnInit {
       search: this.search.value.trim(),
       status: this.status.value,
       branch: this.branch.value,
-      fromDate: this.fromDate.value,
-      toDate: this.toDate.value,
+      fromDate: formatDateMat(this.fromDate.value),
+      toDate: formatDateMat(this.toDate.value),
     });
   }
 

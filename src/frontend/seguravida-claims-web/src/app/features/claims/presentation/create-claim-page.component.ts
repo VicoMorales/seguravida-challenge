@@ -11,10 +11,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { claimTypeLabel as getClaimTypeLabel, errorMessage } from '../../../shared/utils/ui-state';
 import { ClaimsApiService } from '../data-access/claims-api.service';
 import { ClaimType } from '../domain/claim.models';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { formatDateMat } from '../../../shared/utils/formatDate';
 
 @Component({
   selector: 'app-create-claim-page',
-  imports: [RouterLink, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule],
+  imports: [RouterLink, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule],
   template: `
     <section class="mx-auto max-w-3xl space-y-4">
       <a routerLink="/claims" class="inline-flex items-center gap-1 text-sm font-medium text-blue-700">
@@ -44,12 +47,16 @@ import { ClaimType } from '../domain/claim.models';
           <div class="grid gap-4 md:grid-cols-2">
             <mat-form-field appearance="outline">
               <mat-label>Fecha del incidente</mat-label>
-              <input matInput type="date" formControlName="incidentDate" />
+              <input matInput [matDatepicker]="fromDatePicker" formControlName="incidentDate" />
+              <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromDatePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Fecha de reporte</mat-label>
-              <input matInput type="date" formControlName="reportedDate" />
+              <input matInput [matDatepicker]="toDatePicker" formControlName="reportedDate" />
+              <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #toDatePicker></mat-datepicker>
             </mat-form-field>
           </div>
 
@@ -101,16 +108,24 @@ export class CreateClaimPageComponent {
     }
 
     const value = this.form.getRawValue();
+    const incidentDate = formatDateMat(value.incidentDate);
+    const reportedDate = formatDateMat(value.reportedDate);
 
-    if (value.incidentDate > value.reportedDate) {
+    if (incidentDate > reportedDate) {
       this.error.set('La fecha del incidente no puede ser posterior a la fecha de reporte.');
       return;
     }
 
+    const payload = {
+      ...value,
+      incidentDate,
+      reportedDate,
+    };
+
     this.loading.set(true);
     this.error.set(null);
     this.api
-      .createClaim(value)
+      .createClaim(payload)
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (response) => void this.router.navigate(['/claims', response.claimId]),

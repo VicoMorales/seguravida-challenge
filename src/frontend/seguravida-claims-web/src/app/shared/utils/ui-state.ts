@@ -51,7 +51,7 @@ export function claimTypeLabel(type: string): string {
 export function roleLabel(role: string): string {
   return {
     OPERATOR: 'Operador',
-    ADJUSTER: 'Ajustador',
+    ADJUSTER: 'Liquidador',
     AUDITOR: 'Auditor',
     NO_ROLE: 'Sin rol',
   }[role] ?? role;

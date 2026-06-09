@@ -72,7 +72,7 @@ import { ClaimDetail } from '../domain/claim.models';
             </div>
 
             <div *appHasRole="'ADJUSTER'" class="rounded border border-claims-border bg-claims-surface p-5">
-              <h2 class="mb-4 text-base font-semibold">Acciones del ajustador</h2>
+              <h2 class="mb-4 text-base font-semibold">Acciones del Liquidador</h2>
               <div class="flex flex-wrap gap-2">
                 @if (claim()!.status === 'REPORTED') {
                   <button mat-flat-button type="button" [disabled]="actionLoading()" (click)="startReview()">Iniciar revisión</button>
