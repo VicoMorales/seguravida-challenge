@@ -147,12 +147,6 @@ Los eventos de negocio registran IDs tecnicos (`claimId`, `policyId`, `userId`, 
 - El cliente OpenAPI esta preparado, pero el frontend usa servicios manuales tipados para mantener control del MVP.
 - En un escenario regulado real se podria complementar la auditoria de aplicacion con triggers, CDC o temporal tables.
 
-## Documentacion
-
-- [Arquitectura](docs/architecture.md)
-- [Decisiones tecnicas](docs/technical-decisions.md)
-- [Modelo de datos](docs/database-model.md)
-- [API design](docs/api-design.md)
 - [Frontend architecture](docs/frontend-architecture.md)
 - [Observabilidad](docs/observability.md)
 - [Testing strategy](docs/testing-strategy.md)
